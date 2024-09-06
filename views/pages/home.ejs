@@ -1,0 +1,227 @@
+<% layout("layout/boilerplate") %> <% if(currentUser && success.length &&
+aadar.length) {%>
+<div class="alert alert-success m-0" role="alert">
+  <%=success +" " + currentUser.username +" "+ aadar%>
+</div>
+<% } else if(success && success.length){%>
+<div class="alert alert-success m-0" role="alert"><%=success%></div>
+<% } %>
+<div class="container-fluid home-page pt-3">
+  <section class="hero-section">
+    <div class="container">
+      <h1>Welcome to Vyvsai</h1>
+      <p class="text-justify text-center">
+        We provide an AI-powered SaaS platform that automates tender management,
+        integrates marketplace for construction materials, and introduces
+        fintech solutions to streamline and optimize the construction industry’s
+        procurement process.
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="mission-section bg-light">
+    <div class="container">
+      <h2 class="text-center">Our Mission</h2>
+      <p class="text-justify">
+        Our mission is to revolutionize the construction industry by providing
+        cutting-edge AI-powered solutions that ensure project compliance,
+        enhance operational efficiency, and foster transparency. We are
+        committed to empowering construction companies with intelligent
+        monitoring tools, comprehensive data integration, and a robust
+        marketplace. By integrating fintech solutions, we aim to streamline
+        financial processes, improve access to capital, and enable seamless
+        transactions, driving sustainable growth and innovation across
+        government and private sector projects."
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Our Services</h2>
+      <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card border-0" style="border-radius: 10px">
+            <div class="card-body">
+              <h5 class="card-title">Free Trial in Himachal Pradesh</h5>
+              <p class="card-tex">
+                Currently offering a free trial of the SaaS model to over 500
+                contractors, proprietors, and construction company owners in
+                Himachal Pradesh.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card border-0">
+            <div class="card-body">
+              <h5 class="card-title">Tender Notifications</h5>
+              <p class="card-text">
+                AI-driven notifications to inform construction companies about
+                relevant tenders.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card border-0">
+            <div class="card-body">
+              <h5 class="card-title">Bid Prediction</h5>
+              <p class="card-text">
+                Machine learning models that predict successful bid amounts,
+                helping companies make competitive and profitable bids.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card border-0">
+            <div class="card-body">
+              <h5 class="card-title">Marketplace Creation</h5>
+              <p class="card-text">
+                Leveraging data to build a marketplace that connects
+                construction companies with suppliers, contractors, and other
+                stakeholders.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card border-0">
+            <div class="card-body">
+              <h5 class="card-title">Consultancy on Bidding</h5>
+              <p class="card-text">
+                Providing expert advice and guidance on bid filing based on data
+                and machine learning predictions.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card border-0">
+            <div class="card-body">
+              <h5 class="card-title">Fintech Solutions</h5>
+              <p class="card-text">
+                Integrating financial technology solutions to address all
+                construction-related financial challenges, such as payment
+                processing, invoicing, and loan facilitation.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card border-0">
+            <div class="card-body">
+              <h5 class="card-title">Material Supply Focus</h5>
+              <p class="card-text">
+                Emphasizing the supply of construction materials as a key
+                service, distinguishing your platform from competitors.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <p class="lead">Our offerings include:</p>
+        <ul class="list-unstyled">
+          <li>
+            <i class="bi bi-check-circle text-success"></i> Real-time
+            notifications via WhatsApp and email.
+          </li>
+          <li>
+            <i class="bi bi-check-circle text-success"></i> Customizable plans
+            based on project size and scope.
+          </li>
+          <li>
+            <i class="bi bi-check-circle text-success"></i> Comprehensive tender
+            tracking across multiple regions.
+          </li>
+          <li>
+            <i class="bi bi-check-circle text-success"></i> Flexible pricing
+            plans tailored to your specific needs.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="values-section">
+    <div class="container">
+      <h2 class="text-center mb-4">Our Core Values</h2>
+      <div class="row text-center">
+        <!-- Card 1 -->
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-header">Efficiency</div>
+            <div class="card-body">
+              We strive to maximize your time by providing quick and reliable
+              notifications.
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-header">Transparency</div>
+            <div class="card-body">
+              Clear communication and honesty are at the heart of everything we
+              do.
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col-md-6 mb-4">
+          <div class="card core">
+            <div class="card-header">Innovation</div>
+            <div class="card-body">
+              Constantly improving our technology to serve you better.
+            </div>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-header">Client-Centric</div>
+            <div class="card-body">
+              Your needs are our priority, and we tailor our services to meet
+              them.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Testimonials Section -->
+  <section class="testimonials-section bg-light">
+    <div class="container">
+      <h2 class="text-center">Reviews</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="testimonial">
+            <p class="text-justify">
+              "Vyvsai has completely revolutionized our bidding process. Their
+              AI-driven notifications and bid predictions have given us a
+              competitive edge, while the marketplace has streamlined our
+              procurement. The free trial in Himachal Pradesh has been
+              incredibly beneficial, making Vyvsai an essential tool for our
+              business."
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="testimonial">
+            <p class="text-justify">
+              "Vyvsai's SaaS model has been invaluable for us. It not only helps
+              us fill out and submit bids efficiently but also accurately
+              predicts bid outcomes, giving us a significant advantage. The free
+              trial in Himachal Pradesh has proven to be a game-changer."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,116 @@
+<% layout("layout/boilerplate") %> <% if (error && error.length) { %>
+<div class="alert alert-warning" role="alert"><%= error %></div>
+<% } %>
+
+<div class="container mt-5">
+  <h1 class="mb-4">Select State</h1>
+  <form action="/tenders/list" method="GET">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="state" class="form-label">State:</label>
+          <select id="state" name="state" class="form-select" required>
+            <option value="">Select a State</option>
+            <!-- Options will be populated dynamically -->
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6" id="district-container" style="display: none">
+        <div class="form-group">
+          <label for="district" class="form-label">District:</label>
+          <select id="district" name="district" class="form-select">
+            <option value="">Select a District</option>
+            <!-- Options will be populated dynamically -->
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6" id="department-container" style="display: none">
+        <div class="form-group">
+          <label for="department" class="form-label">Department:</label>
+          <select
+            id="department"
+            name="department"
+            class="form-select"
+            required
+          >
+            <option value="">Select a Department</option>
+            <!-- Options will be populated dynamically -->
+          </select>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Fetch and populate states
+    fetch("/tenders/states")
+      .then((response) => response.json())
+      .then((data) => {
+        const stateSelect = document.getElementById("state");
+        data.states.forEach((state) => {
+          const option = document.createElement("option");
+          option.value = state;
+          option.textContent = state;
+          stateSelect.appendChild(option);
+        });
+      })
+      .catch((error) => console.error("Error fetching states:", error));
+
+    // Add event listener for state change
+    document.getElementById("state").addEventListener("change", function () {
+      const selectedState = this.value;
+      const districtSelect = document.getElementById("district");
+      const districtContainer = document.getElementById("district-container");
+      const departmentSelect = document.getElementById("department");
+      const departmentContainer = document.getElementById(
+        "department-container"
+      );
+
+      // Clear existing options
+      districtSelect.innerHTML = '<option value="">Select a District</option>';
+      departmentSelect.innerHTML =
+        '<option value="">Select a Department</option>';
+      districtContainer.style.display = "none";
+      departmentContainer.style.display = "none";
+
+      if (selectedState) {
+        // Fetch districts for the selected state
+        fetch("/tenders/districts/" + selectedState)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.districts.length > 0) {
+              districtContainer.style.display = "block"; // Show districts
+              data.districts.forEach((district) => {
+                const option = document.createElement("option");
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+              });
+            }
+          })
+          .catch((error) => console.error("Error fetching districts:", error));
+
+        // Fetch departments for the selected state
+        fetch("/tenders/departments/" + selectedState)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.departments.length > 0) {
+              departmentContainer.style.display = "block"; // Show departments
+              data.departments.forEach((department) => {
+                const option = document.createElement("option");
+                option.value = department;
+                option.textContent = department;
+                departmentSelect.appendChild(option);
+              });
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching departments:", error)
+          );
+      }
+    });
+  });
+</script>

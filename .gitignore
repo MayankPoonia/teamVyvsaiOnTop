@@ -1,0 +1,9 @@
+.env
+node_modules/
+tender.json
+seedTenders.js
+states-and-districts.json
+states.js
+uploads/
+send.json
+controllers/

@@ -1,0 +1,45 @@
+{
+    "states":[
+        {  
+         "state":"Himachal Pradesh",
+         "districts":[  
+            "Bilaspur (HP)",
+            "Chamba",
+            "Hamirpur(HP)",
+            "Kangra",
+            "Kinnaur",
+            "Kullu",
+            "Lahul & Spiti",
+            "Mandi",
+            "Shimla",
+            "Sirmaur",
+            "Solan",
+            "Una"
+         ],
+         "departments": [
+        "PWD",
+        "HPSEBL",
+        "Chief Project Director IDP Solan",
+        "National Highways Authority of India"
+
+      ]
+      },
+      {
+        "state":"Delhi",
+        "districts":[
+          "South West Delhi",
+          "South Delhi",
+          "North West Delhi",
+          "North East Delhi",
+          "North Delhi",
+          "New Delhi",
+          "East Delhi",
+          "Central Delhi",
+          "West Delhi"
+        ],
+        "departments":[
+          "National Highways Authority of India"
+        ]
+      }
+    ]
+}

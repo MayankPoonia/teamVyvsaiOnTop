@@ -1,0 +1,62 @@
+<% layout("layout/boilerplate") %> <% if(paymentSuccess &&
+paymentSuccess.length) {%>
+<div class="alert alert-success"><%=paymentSuccess %></div>
+<% } %>
+<form action="/subscriptions" method="POST">
+  <div class="container py-5">
+    <div class="pricing-header text-center">
+      <h1 class="display-4">Choose Your Plan</h1>
+      <p class="lead">Select the membership plan that suits your needs.</p>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <!-- Basic Plan -->
+      <div class="col subscription">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Basic Plan</h5>
+            <p class="card-price">₹2799/year</p>
+            <p class="card-feature">✓ Unlimited Notifications</p>
+            <p class="card-feature">✓ Email Alerts</p>
+            <p class="card-feature"><s>Priority Support</s></p>
+            <p class="card-feature"><s>Unlimited Tender Filing</s></p>
+            <p class="card-feature"><s>No-cost Consultancy</s></p>
+            <button class="btn btn-primary btn-plan">Get Started</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="col subscription">
+        <div class="card text-center border-primary">
+          <div class="card-body">
+            <h5 class="card-title">Pro Plan</h5>
+            <p class="card-price">₹5899/year</p>
+            <p class="card-feature">✓ Unlimited Notifications</p>
+            <p class="card-feature">✓ Email & SMS Alerts</p>
+            <p class="card-feature">✓ Priority Support</p>
+            <p class="card-feature"><s>Unlimited Tender Filing</s></p>
+            <p class="card-feature"><s>No-cost Consultancy</s></p>
+            <button class="btn btn-primary btn-plan">Get Started</button>
+          </div>
+        </div>
+      </div>
+      <!-- Enterprise Plan -->
+      <div class="col">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Enterprise Plan</h5>
+            <p class="card-price">
+              ₹14999/<span class="text-muted">year</span>
+            </p>
+            <p class="card-feature">✓ Unlimited Notifications</p>
+            <p class="card-feature">✓ Email, SMS & Phone Alerts</p>
+            <p class="card-feature">✓ AI Based Bid Support</p>
+            <p class="card-feature">✓ Unlimited Tender Filing</p>
+            <p class="card-feature">✓ No-Cost Consultation</p>
+            <button class="btn btn-primary btn-plan">Get Started</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

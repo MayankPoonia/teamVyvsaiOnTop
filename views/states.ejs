@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select State and District</title>
+  </head>
+  <body>
+    <h1>Select Your State and District</h1>
+    <form>
+      <!-- State Selection -->
+      <label for="state">State:</label>
+      <select id="state" name="state" required>
+        <option value="">Select a State</option>
+      </select>
+
+      <!-- District Selection -->
+      <div id="district-container" style="display: none">
+        <label for="district">District:</label>
+        <select id="district" name="district">
+          <option value="">Select a District</option>
+        </select>
+      </div>
+    </form>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fetch and populate states
+        fetch("/states")
+          .then((response) => response.json())
+          .then((data) => {
+            const stateSelect = document.getElementById("state");
+            data.states.forEach((state) => {
+              const option = document.createElement("option");
+              option.value = state;
+              option.textContent = state;
+              stateSelect.appendChild(option);
+            });
+          })
+          .catch((error) => console.error("Error fetching states:", error));
+
+        // Add event listener for state change
+        document
+          .getElementById("state")
+          .addEventListener("change", function () {
+            const state = this.value;
+            const districtContainer =
+              document.getElementById("district-container");
+            const districtSelect = document.getElementById("district");
+
+            // Clear existing options
+            districtSelect.innerHTML =
+              '<option value="">Select a District</option>';
+
+            if (state) {
+              // Show the district container
+              districtContainer.style.display = "block";
+
+              // Fetch districts for the selected state
+              fetch(`/districts/${state}`)
+                .then((response) => response.json())
+                .then((data) => {
+                  data.districts.forEach((district) => {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                  });
+                })
+                .catch((error) =>
+                  console.error("Error fetching districts:", error)
+                );
+            } else {
+              // Hide the district container if no state is selected
+              districtContainer.style.display = "none";
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
