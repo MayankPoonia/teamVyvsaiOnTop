@@ -1,0 +1,122 @@
+<% layout("layout/boilerplate") %>
+
+<!-- Error Message Alert -->
+<% if (errorMessages && errorMessages.length) { %>
+<div class="alert alert-danger" role="alert">
+  <ul>
+    <% errorMessages.forEach(error => { %>
+      <li><%= error %></li>
+    <% }); %>
+  </ul>
+</div>
+<% } %>
+
+<div class="container mt-5 py-2">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h1 class="text-center mb-4">Register</h1>
+      <form action="/register" method="POST" class="needs-validation" novalidate>
+        
+        <!-- Username Field -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control <%= errorMessages.find(e => e.includes('Username')) ? 'is-invalid' : '' %>"
+            value="<%= formData.username || '' %>"
+            required
+          />
+          <% if (errorMessages.find(e => e.includes('Username'))) { %>
+            <div class="invalid-feedback">
+              <%= errorMessages.find(e => e.includes('Username')) %>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Mobile Number Field -->
+        <div class="mb-3">
+          <label for="mobileNo" class="form-label">Contact Number:</label>
+          <input
+            type="text"
+            id="mobileNo"
+            name="mobileNo"
+            class="form-control <%= errorMessages.find(e => e.includes('Mobile')) ? 'is-invalid' : '' %>"
+            value="<%= formData.mobileNo || '' %>"
+            required
+          />
+          <% if (errorMessages.find(e => e.includes('Mobile'))) { %>
+            <div class="invalid-feedback">
+              <%= errorMessages.find(e => e.includes('Mobile')) %>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Email Field -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control <%= errorMessages.find(e => e.includes('Email')) ? 'is-invalid' : '' %>"
+            value="<%= formData.email || '' %>"
+            required
+          />
+          <% if (errorMessages.find(e => e.includes('Email'))) { %>
+            <div class="invalid-feedback">
+              <%= errorMessages.find(e => e.includes('Email')) %>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Password Field -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control <%= errorMessages.find(e => e.includes('Password')) ? 'is-invalid' : '' %>"
+            value="<%= formData.password || '' %>"
+            required
+          />
+          <% if (errorMessages.find(e => e.includes('Password'))) { %>
+            <div class="invalid-feedback">
+              <%= errorMessages.find(e => e.includes('Password')) %>
+            </div>
+          <% } %>
+        </div>
+
+<!-- Budget Preferences -->
+
+
+        <!-- Preferences Field -->
+        <div class="mb-4">
+          <label for="preferences" class="form-label">Notification Preferences:</label>
+          <select
+            id="preferences"
+            name="preferences"
+            class="form-select <%= errorMessages.find(e => e.includes('Preferences')) ? 'is-invalid' : '' %>"
+            required
+          >
+            <option value="">Select preference</option>
+            <option value="goverment-tenders" <%= formData.preferences === 'goverment-tenders' ? 'selected' : '' %>>Government Tenders</option>
+          </select>
+          <% if (errorMessages.find(e => e.includes('Preferences'))) { %>
+            <div class="invalid-feedback">
+              <%= errorMessages.find(e => e.includes('Preferences')) %>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+      </form>
+      <div class="text-center mt-3">
+        <p>Already have an account? <a href="/login">Login here</a></p>
+      </div>
+    </div>
+  </div>
+</div>

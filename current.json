@@ -1,0 +1,26 @@
+{
+    "states":[
+        {  
+         "state":"Himachal Pradesh",
+         "districts":[  
+            "Bilaspur (HP)",
+            "Chamba",
+            "Hamirpur(HP)",
+            "Kangra",
+            "Kinnaur",
+            "Kullu",
+            "Lahul & Spiti",
+            "Mandi",
+            "Shimla",
+            "Sirmaur",
+            "Solan",
+            "Una"
+         ],
+         "departments": [
+        "PWD",
+        "HPSEBL",
+        "Chief Project Director IDP Solan"
+      ]
+      }
+    ]
+}

@@ -1,0 +1,55 @@
+<% layout("layout/boilerplate") %>
+
+<div class="container my-5">
+  <h2 class="text-center mb-4"><strong>Latest Tenders Released</strong></h2>
+  <div class="card">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Field</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Tender ID</th>
+            <td><%= tender.tender_id %></td>
+          </tr>
+          <tr>
+            <th scope="row">Title</th>
+            <td><%= tender.title %></td>
+          </tr>
+          <tr>
+            <th scope="row">Organization Name</th>
+            <td><%= tender.org_name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Category</th>
+            <td><%= tender.category %></td>
+          </tr>
+          <tr>
+            <th scope="row">Price</th>
+            <td><%= tender.price %></td>
+          </tr>
+          <tr>
+            <th scope="row">Address</th>
+            <td><%= tender.address %></td>
+          </tr>
+          <tr>
+            <th scope="row">Closing Date</th>
+            <td><%= tender.closing_date %></td>
+          </tr>
+          <tr>
+            <th scope="row">BOQ</th>
+            <td>
+              <a href="<%=tender.boq%>" class="btn btn-primary" download
+                >Download BOQ</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
