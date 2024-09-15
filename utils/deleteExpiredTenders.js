@@ -60,8 +60,8 @@ function parseClosingDate(dateString) {
   return parsedDate;
 }
 
-// Schedule cron job to run every 5 minutes
-cron.schedule("*/1 * * * *", async () => {
+// Schedule cron job to run every 6 hour
+cron.schedule("* */6 * * *", async () => {
   // console.log("Cron job is running at:", new Date().toLocaleString());
   try {
     const currentDate = new Date(); // Current date and time

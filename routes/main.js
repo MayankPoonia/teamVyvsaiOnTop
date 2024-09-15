@@ -1,35 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { isLoggedIn, storeReturnTo } = require("../middleware");
 const wrapAsync = require("../utils/wrapAsync");
-const passport = require("passport");
-const User = require("../models/user");
-const crypto = require("crypto");
-const sendOTPEmail = require("../utils/sendOTPEmail");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
 
 router.get(
-  "/",
+  "/" || "/home",
   wrapAsync(async (req, res) => {
-    res.render("pages/home");
-  }),
-);
-
-router.get(
-  "/documents",
-  wrapAsync(async (req, res) => {
-    res.render("pages/documents");
-  }),
-);
-
-router.post(
-  "/documents",
-  upload.array("documents"),
-  wrapAsync(async (req, res) => {
-    console.log(req.files);
-    res.send("Uploaded");
-  }),
+    const cookie = req.cookies.name;
+    res.render("pages/home", { cookie });
+  })
 );
 
 //privacy routes
@@ -41,16 +19,27 @@ router.get("/contact", (req, res) => {
   res.render("pages/contact");
 });
 
+router.post("/get-in-touch", (req, res) => {
+  res.send("Okay Vai");
+});
+
 router.get(
   "/logout",
   wrapAsync(async (req, res) => {
-    req.logout(function (err) {
+    // Destroy session data and clear session
+    req.session.destroy((err) => {
       if (err) {
-        return next(err);
+        console.log("Error destroying session:", err);
+        return res.redirect("/");
       }
-      req.flash("success", "Succesfully Logged You Out");
+
+      // Clear the token cookie
+      res.clearCookie("UUID");
+
+      // Redirect after session and cookie are cleared
       res.redirect("/");
     });
-  }),
+  })
 );
+
 module.exports = router;

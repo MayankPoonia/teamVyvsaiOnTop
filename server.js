@@ -3,11 +3,10 @@ const path = require("path");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
-const LocalStrategy = require("passport-local");
-const passport = require("passport");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const MongoStore = require("connect-mongo");
+const cookieParser = require("cookie-parser");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -27,7 +26,7 @@ connectDB();
 
 const store = MongoStore.create({
   mongoUrl: process.env.mongoURL,
-  touchAfter: 24 * 60 * 60,
+  touchAfter: 20 * 60,
   crypto: {
     secret: "thisshouldbeabettersecret!",
   },
@@ -37,9 +36,6 @@ store.on("error", function (e) {
 });
 
 require("./utils/deleteExpiredTenders");
-
-//models
-const User = require("./models/user");
 
 //session Config
 const sessionConfig = {
@@ -54,15 +50,22 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 20,
   },
 };
+
 const scriptSrcUrls = [
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
   "https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js",
 ];
+
 const styleSrcUrls = [
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
   "https://fonts.googleapis.com",
 ];
-const fontSrcUrls = ["https://fonts.gstatic.com"];
+
+const fontSrcUrls = [
+  "https://fonts.gstatic.com",
+  "https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css",
+];
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -83,6 +86,7 @@ app.use(
     },
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -92,24 +96,11 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 app.use(session(sessionConfig));
+app.use(cookieParser());
 app.use(flash());
 
-//initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-//configure passport
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 app.use((req, res, next) => {
-  // console.log(req.session);
-  res.locals.currentUser = req.user;
-  res.locals.success = req.flash("success");
-  res.locals.alert = req.flash("alert");
-  res.locals.error = req.flash("error");
-  res.locals.aadar = req.flash("aadar");
+  res.locals.currentUser = req.session.currentUser || null;
   res.locals.paymentSuccess = req.flash("paymentSuccess");
   next();
 });
@@ -120,9 +111,11 @@ app.use("/tenders", tenderRoutes);
 app.use("/password-reset", resetRoutes);
 app.use("/subscriptions", paymentRoutes);
 app.use("/", mainRoutes);
+
 app.get("*", (req, res) => {
   res.render("pages/notFound");
 });
+
 app.use((err, req, res, next) => {
   // console.log(err);
   res.send(err);

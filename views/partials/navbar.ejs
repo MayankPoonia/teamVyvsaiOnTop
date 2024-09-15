@@ -1,10 +1,10 @@
 <nav
-  class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-1 border-dark"
+  class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-3 border-primary-subtle fixed-top"
 >
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"
-      ><img src="/images/logo-2.png" alt="vyvsai" class="logo"
-    /></a>
+    <a class="navbar-brand" href="/">
+      <img src="/images/logo-2.png" alt="vyvsai" class="logo" />
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -24,9 +24,16 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="/tenders">Tenders</a>
         </li>
+   
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/tenders/file"
+            >Filing</a
+          >
+        </li>
+
       </ul>
       <ul class="navbar-nav ml-auto">
-        <% if(currentUser) { %>
+        <% if (currentUser) { %>
         <li class="nav-item">
           <a class="nav-link" href="/logout">Log-Out</a>
         </li>

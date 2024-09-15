@@ -1,64 +1,74 @@
 <% layout("layout/boilerplate") %>
+<div class="mt-5 pt-4">
+  <h1 class="my-4 text-center">
+    Latest <%= department %> Tenders in <%= district %>
+  </h1>
+  <hr />
 
-<h1 class="my-4 text-center">
-  Latest <%= department %> Tenders in <%= state %>
-</h1>
-<hr />
-
-<div class="table-responsive">
-  <table class="table table-bordered table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th scope="col">Title</th>
-        <th scope="col" style="max-width: 150px">Location</th>
-        <th scope="col">Price</th>
-        <th scope="col">Closing Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(let tender of tenders) { %>
-      <tr>
-        <td>
-          <a href="/tenders/<%= tender._id %>"><%= tender.title %></a>
-        </td>
-        <td style="max-width: 200px"><%= tender.district %></td>
-        <td><%= tender.price %></td>
-        <td><%= tender.closing_date %></td>
-      </tr>
-      <% } %>
-    </tbody>
-  </table>
-</div>
-
-<nav aria-label="Page navigation"></nav>
-  <ul class="pagination justify-content-center">
-    <li class="page-item <%= page === 1 ? 'disabled' : '' %>">
-      <a
-        class="page-link"
-        href="/tenders/list?state=<%= state %>&department=<%= department %>&page=<%= page - 1 %>&limit=<%= limit %>"
-        aria-label="Previous"
-      >
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-
-    <% for (let i = 1; i <= totalPages; i++) { %>
-    <li class="page-item <%= i === page ? 'active' : '' %>">
-      <a
-        class="page-link"
-        href="/tenders/list?state=<%= state %>&department=<%= department %>&page=<%= i %>&limit=<%= limit %>"
-        ><%= i %></a>
-    </li>
+  <div class="table-responsive">
+    <% if (tenders.length > 0) { %>
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col" style="max-width: 150px">Location</th>
+          <th scope="col">Price</th>
+          <th scope="col">Closing Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let tender of tenders) { %>
+        <tr>
+          <td>
+            <a href="/tenders/<%= tender._id %>"><%= tender.title %></a>
+          </td>
+          <td style="max-width: 200px"><%= tender.district %></td>
+          <td><%= tender.price %></td>
+          <td><%= tender.closing_date %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <% } else { %>
+    <p class="text-center">
+      No tenders found for <%= department %> in <%= district %>.
+    </p>
     <% } %>
+  </div>
 
-    <li class="page-item <%= page === totalPages ? 'disabled' : '' %>">
-      <a
-        class="page-link"
-        href="/tenders/list?state=<%= state %>&department=<%= department %>&page=<%= page + 1 %>&limit=<%= limit %>"
-        aria-label="Next"
-      >
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+  <% if (tenders.length > 0 && totalPages > 1) { %>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item <%= page === 1 ? 'disabled' : '' %>">
+        <a
+          class="page-link"
+          href="/tenders/list?state=<%= state %>&district=<%= district %>&department=<%= department %>&page=<%= page - 1 %>&limit=<%= limit %>"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= i === page ? 'active' : '' %>">
+        <a
+          class="page-link"
+          href="/tenders/list?state=<%= state %>&district=<%= district %>&department=<%= department %>&page=<%= i %>&limit=<%= limit %>"
+          ><%= i %></a
+        >
+      </li>
+      <% } %>
+
+      <li class="page-item <%= page === totalPages ? 'disabled' : '' %>">
+        <a
+          class="page-link"
+          href="/tenders/list?state=<%= state %>&district=<%= district %>&department=<%= department %>&page=<%= page + 1 %>&limit=<%= limit %>"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <% } %>
+</div>

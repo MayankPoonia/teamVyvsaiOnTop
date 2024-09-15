@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const path = require("path");
 const fs = require("fs");
 const router = express.Router({ mergeParams: true });
+const { jwtAuthenticate, planCheck } = require("../middleware");
 
 // Constants for pagination
 const DEFAULT_LIMIT = 10;
@@ -15,10 +16,15 @@ let statesAndDistricts = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 // Render the main tenders page (with form)
 router.get(
   "/",
+  jwtAuthenticate,
   wrapAsync(async (req, res) => {
     res.render("tenders/main");
   })
 );
+
+router.get("/file", planCheck, (req, res) => {
+  res.send("Filing Kar dunga bhai");
+});
 
 // Route to fetch all states
 router.get(
@@ -66,6 +72,7 @@ router.get(
 // Handle form submission and render tenders with pagination
 router.get(
   "/list",
+  jwtAuthenticate,
   wrapAsync(async (req, res) => {
     const {
       state,
@@ -82,8 +89,8 @@ router.get(
     // Construct query based on filters provided (state, district, department)
     const query = {
       state,
-      district: district || undefined, // Optional district
-      org_name: department || undefined,
+      district: district, // Optional district
+      org_name: department,
     };
 
     // Remove undefined keys from the query object
@@ -144,17 +151,16 @@ router.get(
 // Route to render details of a specific tender
 router.get(
   "/:id",
+  jwtAuthenticate,
   wrapAsync(async (req, res) => {
     try {
       const { id } = req.params;
       const tender = await Tender.findById(id);
       if (!tender) {
-        req.flash("error", "The tender does not exist or has been CLOSED");
         return res.redirect("/tenders");
       }
       res.render("tenders/show", { tender });
     } catch (error) {
-      req.flash("error", "Something Went Wrong");
       return res.redirect("/tenders");
     }
   })

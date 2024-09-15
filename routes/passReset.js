@@ -34,7 +34,6 @@ router.post(
 
     await sendOTPEmail(user.email, otp); // Send OTP via email
 
-    req.flash("success", "OTP sent successfully. Please check your email.");
     res.redirect("/password-reset/verify-otp");
   }),
 );
@@ -50,10 +49,6 @@ router.post(
     const { otp } = req.body;
 
     if (req.session.otp === otp) {
-      req.flash(
-        "success",
-        "OTP verified successfully. You can now reset your password.",
-      );
       res.redirect("/password-reset/new-password");
     } else {
       res.render("password-reset/verify-otp", {
@@ -66,10 +61,7 @@ router.post(
 // New Password Route
 router.get("/new-password", (req, res) => {
   if (!req.session.userId) {
-    req.flash(
-      "error",
-      "Invalid request. Please start the password reset process again.",
-    );
+   
     return res.redirect("/password-reset/request-otp");
   }
   res.render("password-reset/new-password", { errorMessages: [] });
@@ -88,10 +80,7 @@ router.post(
 
     const user = await User.findById(req.session.userId);
     if (!user) {
-      req.flash(
-        "error",
-        "No user found. Please start the password reset process again.",
-      );
+      
       return res.redirect("/password-reset/request-otp");
     }
 

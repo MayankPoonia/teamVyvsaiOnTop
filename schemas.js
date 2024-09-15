@@ -59,31 +59,6 @@ module.exports.userSchema = Joi.object({
     .messages({
       "string.valid": "Invalid tender preference selected",
       "string.empty": "Tender preference is required",
-    }),
-  budgetPreferences: Joi.alternatives()
-    .try(
-      Joi.array().items(
-        Joi.string().valid(
-          "below-20-lakhs",
-          "20-lakhs-to-1-crore",
-          "above-1-crore",
-        ),
-      ),
-      Joi.string().valid(
-        "below-20-lakhs",
-        "20-lakhs-to-1-crore",
-        "above-1-crore",
-      ),
-    )
-    .custom((value, helpers) => {
-      return normalizeBudgetPreferences(value);
-    })
-    .required()
-    .messages({
-      "array.base": "Budget preferences should be an array",
-      "array.min": "You must select at least one budget preference",
-      "any.only": "Invalid budget preference selected",
-      "any.required": "Budget preferences are required",
     })
     .required(),
 });

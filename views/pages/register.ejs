@@ -11,7 +11,7 @@
 </div>
 <% } %>
 
-<div class="container mt-5 py-2">
+<div class="container mt-5 py-4">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h1 class="text-center mb-4">Register</h1>
@@ -88,52 +88,6 @@
             </div>
           <% } %>
         </div>
-
-<!-- Budget Preferences -->
-<div class="mb-4">
-  <label for="budgetPreferences" class="form-label">Budget Preferences:</label>
-  <div id="budgetPreferences">
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        name="budgetPreferences"
-        id="below20lakhs"
-        value="below-20-lakhs"
-        <%= formData.budgetPreferences && formData.budgetPreferences.includes('below-20-lakhs') ? 'checked' : '' %>
-      />
-      <label class="form-check-label" for="below20lakhs">
-        Below 20 Lakhs
-      </label>
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        name="budgetPreferences"
-        id="20lakhsto1crore"
-        value="20-lakhs-to-1-crore"
-        <%= formData.budgetPreferences && formData.budgetPreferences.includes('20-lakhs-to-1-crore') ? 'checked' : '' %>
-      />
-      <label class="form-check-label" for="20lakhsto1crore">
-        20 Lakhs to 1 Crore
-      </label>
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        name="budgetPreferences"
-        id="above1crore"
-        value="above-1-crore"
-        <%= formData.budgetPreferences && formData.budgetPreferences.includes('above-1-crore') ? 'checked' : '' %>
-      />
-      <label class="form-check-label" for="above1crore">
-        Above 1 Crore
-      </label>
-    </div>
-  </div>
-</div>
 
         <!-- Preferences Field -->
         <div class="mb-4">

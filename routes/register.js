@@ -3,6 +3,8 @@ const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
 const User = require("../models/user");
 const { userSchema } = require("../schemas");
+const { generateToken } = require("../utils/tokenGenerate");
+
 const validateUser = async (req, res, next) => {
   const { error } = userSchema.validate(req.body);
   if (error) {
@@ -19,43 +21,42 @@ router.get(
   "/",
   wrapAsync(async (req, res) => {
     res.render("pages/register", { formData: {}, errorMessages: [] });
-  }),
+  })
 );
 
 router.post(
   "/",
   validateUser,
   wrapAsync(async (req, res, next) => {
-    const {
-      username,
-      mobileNo,
-      email,
-      budgetPreferences,
-      preferences,
-      password,
-    } = req.body;
+    console.log(req.body);
+    const { username, mobileNo, email, preferences, password } = req.body;
     const user = new User({
       username,
-      budgetPreferences,
+      password,
       preferences,
       email,
       mobileNo,
     });
 
     try {
-      const registeredUser = await User.register(user, password);
-      await registeredUser.save();
-      req.login(registeredUser, async (err) => {
-        if (err) return next(err);
-        req.flash("success", "A huge welcome from Team VYVSAI ~ ");
-        req.flash("aadar", "ji");
-        res.redirect("/");
+      const registeredUser = await user.save(); // Try saving the user
+      const token = generateToken(registeredUser); // Generate JWT token
+
+      // Set JWT in cookie
+      res.cookie("UUID", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
       });
+      req.session.currentUser = registeredUser;
+
+      const redirectURL = res.locals.returnTo || "/";
+      return res.redirect(redirectURL);
     } catch (e) {
-      req.flash("error", e.message);
-      res.redirect("/register");
+      console.error("Error during user registration:", e); // Log the error
+      return res.redirect("/register");
     }
-  }),
+  })
 );
 
 module.exports = router;

@@ -1,14 +1,8 @@
-<% layout("layout/boilerplate") %> <% if(currentUser && success.length &&
-aadar.length) {%>
-<div class="alert alert-success m-0" role="alert">
-  <%=success +" " + currentUser.username +" "+ aadar%>
-</div>
-<% } else if(success && success.length){%>
-<div class="alert alert-success m-0" role="alert"><%=success%></div>
-<% } %>
-<div class="container-fluid home-page pt-3">
+<% layout("layout/boilerplate") %> 
+
+<div class="home-page">
   <section class="hero-section">
-    <div class="container">
+    <div class="container text-white-subtle">
       <h1>Welcome to Vyvsai</h1>
       <p class="text-justify text-center">
         We provide an AI-powered SaaS platform that automates tender management,
@@ -21,7 +15,7 @@ aadar.length) {%>
 
   <!-- Mission Section -->
   <section class="mission-section bg-light">
-    <div class="container">
+    <div class="container text-primary-emphasis">
       <h2 class="text-center">Our Mission</h2>
       <p class="text-justify">
         Our mission is to revolutionize the construction industry by providing
@@ -43,10 +37,13 @@ aadar.length) {%>
       <h2 class="text-center mb-4">Our Services</h2>
       <div class="row">
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0" style="border-radius: 10px">
+          <div
+            class="card border border-primary border-opacity-50"
+            style="border-radius: 10px"
+          >
             <div class="card-body">
               <h5 class="card-title">Free Trial in Himachal Pradesh</h5>
-              <p class="card-tex">
+              <p class="card-text">
                 Currently offering a free trial of the SaaS model to over 500
                 contractors, proprietors, and construction company owners in
                 Himachal Pradesh.
@@ -55,7 +52,7 @@ aadar.length) {%>
           </div>
         </div>
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0">
+          <div class="card border border-primary border-opacity-75">
             <div class="card-body">
               <h5 class="card-title">Tender Notifications</h5>
               <p class="card-text">
@@ -66,7 +63,7 @@ aadar.length) {%>
           </div>
         </div>
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0">
+          <div class="card border border-primary border-opacity-50">
             <div class="card-body">
               <h5 class="card-title">Bid Prediction</h5>
               <p class="card-text">
@@ -77,7 +74,7 @@ aadar.length) {%>
           </div>
         </div>
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0">
+          <div class="card border border-primary border-opacity-50">
             <div class="card-body">
               <h5 class="card-title">Marketplace Creation</h5>
               <p class="card-text">
@@ -89,7 +86,7 @@ aadar.length) {%>
           </div>
         </div>
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0">
+          <div class="card border border-primary border-opacity-50">
             <div class="card-body">
               <h5 class="card-title">Consultancy on Bidding</h5>
               <p class="card-text">
@@ -100,8 +97,8 @@ aadar.length) {%>
           </div>
         </div>
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0">
-            <div class="card-body">
+          <div class="card border border-primary border-opacity-50">
+            <div class="card-body bg-">
               <h5 class="card-title">Fintech Solutions</h5>
               <p class="card-text">
                 Integrating financial technology solutions to address all
@@ -112,9 +109,11 @@ aadar.length) {%>
           </div>
         </div>
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0">
+          <div class="card border border-primary border-opacity-50">
             <div class="card-body">
-              <h5 class="card-title">Material Supply Focus</h5>
+              <h5 class="card-title text-primary-emphasis">
+                Material Supply Focus
+              </h5>
               <p class="card-text">
                 Emphasizing the supply of construction materials as a key
                 service, distinguishing your platform from competitors.
@@ -148,13 +147,13 @@ aadar.length) {%>
   </section>
 
   <!-- Values Section -->
-  <section class="values-section">
-    <div class="container">
+  <section class="values-section rounded p-1">
+    <div class="container text-primary-emphasis">
       <h2 class="text-center mb-4">Our Core Values</h2>
       <div class="row text-center">
         <!-- Card 1 -->
         <div class="col-md-6 mb-4">
-          <div class="card">
+          <div class="card border border-primary border-opacity-75">
             <div class="card-header">Efficiency</div>
             <div class="card-body">
               We strive to maximize your time by providing quick and reliable
@@ -164,7 +163,7 @@ aadar.length) {%>
         </div>
         <!-- Card 2 -->
         <div class="col-md-6 mb-4">
-          <div class="card">
+          <div class="card border border-primary border-opacity-75">
             <div class="card-header">Transparency</div>
             <div class="card-body">
               Clear communication and honesty are at the heart of everything we
@@ -174,7 +173,7 @@ aadar.length) {%>
         </div>
         <!-- Card 3 -->
         <div class="col-md-6 mb-4">
-          <div class="card core">
+          <div class="card core border border-primary border-opacity-75">
             <div class="card-header">Innovation</div>
             <div class="card-body">
               Constantly improving our technology to serve you better.
@@ -183,7 +182,7 @@ aadar.length) {%>
         </div>
         <!-- Card 4 -->
         <div class="col-md-6 mb-4">
-          <div class="card">
+          <div class="card border border-primary border-opacity-75">
             <div class="card-header">Client-Centric</div>
             <div class="card-body">
               Your needs are our priority, and we tailor our services to meet
@@ -195,11 +194,11 @@ aadar.length) {%>
     </div>
   </section>
   <!-- Testimonials Section -->
-  <section class="testimonials-section bg-light">
+  <section class="testimonials-section bg-primary-subtle">
     <div class="container">
       <h2 class="text-center">Reviews</h2>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 rounded">
           <div class="testimonial">
             <p class="text-justify">
               "Vyvsai has completely revolutionized our bidding process. Their
