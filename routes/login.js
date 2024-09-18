@@ -16,7 +16,7 @@ router.post(
   "/",
   wrapAsync(async (req, res) => {
     const { mobileNo, password } = req.body;
-    console.log("Login attempt:", { mobileNo });
+    // console.log("Login attempt:", { mobileNo });
     const user = await User.findOne({ mobileNo });
 
     if (!user) {
@@ -26,11 +26,11 @@ router.post(
 
     const verify = await bcrypt.compare(password, user.password);
     if (!verify) {
-      console.log("Password mismatch");
+      // console.log("Password mismatch");
       return res.redirect("/login");
     } else {
       const token = generateToken(user);
-      console.log("Generated token:", token);
+      // console.log("Generated token:", token);
       res.cookie("UUID", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

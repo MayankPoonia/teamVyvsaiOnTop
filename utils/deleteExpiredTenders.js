@@ -1,8 +1,6 @@
 const cron = require("node-cron");
 const Tender = require("../models/tender");
 
-// MongoDB connection setup
-
 // Function to parse date string into JavaScript Date object
 function parseClosingDate(dateString) {
   if (!dateString) {

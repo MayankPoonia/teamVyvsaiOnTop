@@ -1,0 +1,62 @@
+<% layout("layout/boilerplate") %>
+
+<div class="container my-5 pt-4">
+  <h2 class="text-center mb-4"><strong>Upload Your Documents</strong></h2>
+  <div class="card">
+    <div class="card-body">
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <!-- Tender ID -->
+        <div class="mb-3">
+          <label for="tenderId" class="form-label"
+            ><strong>Tender ID</strong></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="tenderId"
+            name="tenderId"
+            required
+            placeholder="Enter Tender ID"
+          />
+        </div>
+
+        <!-- Mobile Number -->
+        <div class="mb-3">
+          <label for="mobileNo" class="form-label"
+            ><strong>Mobile Number</strong></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="mobileNo"
+            name="mobileNo"
+            required
+            placeholder="Enter Mobile Number"
+          />
+        </div>
+
+        <!-- File Upload -->
+        <div class="mb-3">
+          <label for="files" class="form-label"
+            ><strong>Choose Files</strong></label
+          >
+          <input
+            type="file"
+            class="form-control"
+            id="files"
+            name="files"
+            multiple
+            required
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-success btn-block">
+            <strong>Upload Documents</strong>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
