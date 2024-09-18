@@ -150,7 +150,10 @@ body {
   border-radius: 0.3rem;
 }
 .title-logo {
-  border-radius: 1rem;
+  border-radius: 50%;
+  max-width: 36px;
+  max-height: 36px;
+  display: block;
 }
 .shadow-dedo {
   border: none;
@@ -180,4 +183,25 @@ body {
 }
 .home-button {
   margin-top: 20px;
+}
+.membership {
+  animation: rotate 2s linear infinite;
+  transition: all 0.2s;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 0.4rem;
+}
+.membership:hover {
+  animation: none;
+}
+@keyframes rotate {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(90deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
 }
