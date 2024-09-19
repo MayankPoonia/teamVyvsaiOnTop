@@ -29,7 +29,7 @@ router.get(
     // Destroy session data and clear session
     req.session.destroy((err) => {
       if (err) {
-        console.log("Error destroying session:", err);
+        // console.log("Error destroying session:", err);
         return res.redirect("/");
       }
 

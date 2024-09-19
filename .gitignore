@@ -1,8 +1,10 @@
 .env
-node_modules/
-tender.json
-seedTenders.js
-states-and-districts.json
 states.js
+seedTenders.js
+node_modules/
+controllers/
 uploads/
-send.json
+states-and-districts.json
+credentials.json
+token.json
+tender.json

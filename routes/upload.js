@@ -25,9 +25,8 @@ router.post(
   temporaryStore.array("files"),
   async (req, res) => {
     try {
-      const auth = getOAuth2Client();
+      const auth = await getOAuth2Client(); // Await updated OAuth2 client
 
-      // Create folder in Google Drive using mobile number and tender ID
       const folderName = `${req.body.mobileNo}-${req.body.tenderId}`;
       const folderId = await createFolder(auth, folderName);
 

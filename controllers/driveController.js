@@ -1,89 +1,95 @@
-//for creating files and dir , dynamically
 const fs = require("fs");
-
-// to fix relative path issues
 const path = require("path");
-
-// for specifying the file format while uploading to google drive
 const mime = require("mime-types");
-
-// to use google drive API
 const { google } = require("googleapis");
 
 //-------------------------------- Google client Setup --------------------------------
 
-// loading the google credentials
+// Load Google Drive API credentials
 const credentials = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../credentials.json"))
 ).installed;
 
-// loading the access and refresh token
-const tokens = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "../token.json"))
-);
+// Load access and refresh tokens
+let tokens = JSON.parse(fs.readFileSync(path.join(__dirname, "../token.json")));
 
-const getOAuth2Client = () => {
+// Function to create an OAuth2 client
+const getOAuth2Client = async () => {
   const { client_id, client_secret, redirect_uris } = credentials;
 
-  // creating our OAuth2.0 client
+  // Create OAuth2 client with credentials
   const oauth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
 
-  // giving access and refresh tokens to the client
+  // Set existing tokens to the OAuth2 client
   oauth2Client.setCredentials(tokens);
+
+  // Refresh token if needed and save new tokens
+  oauth2Client.on("tokens", (newTokens) => {
+    if (newTokens.refresh_token) {
+      tokens.refresh_token = newTokens.refresh_token;
+    }
+    tokens.access_token = newTokens.access_token;
+
+    // Write the updated tokens back to the token.json file
+    fs.writeFileSync(
+      path.join(__dirname, "../token.json"),
+      JSON.stringify(tokens, null, 2)
+    );
+  });
+
+  // Automatically handle token refresh if expired
+  await oauth2Client.getAccessToken();
+
   return oauth2Client;
 };
 
-//------------ creating folder in Google Drive -------------------------------------
-// function for creating the folder in google drive
-const createFolder = async (authClient, folderName) => {
-  const drive = google.drive({ version: "v3", auth: authClient });
+//------------ Creating Folder in Google Drive -------------------------------------
+// Function to create a folder in Google Drive
+const createFolder = async (auth, folderName) => {
+  const drive = google.drive({ version: "v3", auth });
   try {
-    // resource object contains the metadata for the new file or folder that you want to create.
-    //It specifies the details of the item being created.
-
+    // Create a folder with the specified name
     const response = await drive.files.create({
       resource: {
         name: folderName,
         mimeType: "application/vnd.google-apps.folder",
-        //The MIME type application/vnd.google-apps.folder is used to indicate that
-        // the document we want to create in our drive is a folder.
       },
-
-      // fields specifies which fields should be included in the response from the API
-      // in this case , we are taking the id of our doc which is uploaded to google drive
       fields: "id",
     });
-    return response.data.id;
+    return response.data.id; // Return folder ID
   } catch (error) {
     console.error("Error creating folder:", error);
     throw new Error("Error creating folder");
   }
 };
-//-------------- uploading file to google drive-------------------------------------------
-const uploadFile = async (authClient, folderID, file) => {
-  const drive = google.drive({ version: "v3", auth: authClient });
-  const filePath = path.join(__dirname, "..", "uploads", file.filename);
 
-  // Log the file path to debug
+//-------------- Uploading File to Google Drive -------------------------------------------
+// Function to upload a file to Google Drive
+const uploadFile = async (auth, folderID, file) => {
+  const drive = google.drive({ version: "v3", auth });
+
+  // Update filePath to use 'temporary' directory as specified in Multer setup
+  const filePath = path.join(__dirname, "..", "temporary", file.filename);
+
   console.log("File path:", filePath);
 
-  // check if the file exists
+  // Check if the file exists
   if (!fs.existsSync(filePath)) {
     console.error("File does not exist:", filePath);
     throw new Error("File does not exist");
   }
 
-  // get the mime type of the file
+  // Determine the MIME type of the file
   const mimeType = mime.lookup(filePath) || "application/octet-stream";
 
   try {
     const fileMetadata = {
       name: file.originalname,
-      parent: [folderID],
+      parents: [folderID],
     };
 
     const media = {
@@ -91,16 +97,18 @@ const uploadFile = async (authClient, folderID, file) => {
       body: fs.createReadStream(filePath),
     };
 
+    // Upload the file and return the file ID
     const response = await drive.files.create({
       resource: fileMetadata,
       media: media,
       fields: "id",
     });
 
+    // Clean up local file after upload
     fs.unlinkSync(filePath);
     return response.data.id;
   } catch (error) {
-    console.log(error);
+    console.error("Error uploading file:", error);
     throw new Error("Error uploading file");
   }
 };

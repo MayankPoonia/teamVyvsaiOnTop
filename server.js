@@ -111,7 +111,7 @@ app.use("/register", registerRoutes);
 app.use("/tenders", tenderRoutes);
 app.use("/password-reset", resetRoutes);
 app.use("/subscriptions", paymentRoutes);
-app.use("/upload-documents", uploadRoutes);
+// app.use("/upload-documents", uploadRoutes);
 app.use("/", mainRoutes);
 
 app.get("*", (req, res) => {
