@@ -16,7 +16,7 @@ let statesAndDistricts = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 // Render the main tenders page (with form)
 router.get(
   "/",
-  jwtAuthenticate,
+  // jwtAuthenticate,
   wrapAsync(async (req, res) => {
     res.render("tenders/main");
   })
@@ -72,7 +72,7 @@ router.get(
 // Handle form submission and render tenders with pagination
 router.get(
   "/list",
-  jwtAuthenticate,
+  // jwtAuthenticate,
   wrapAsync(async (req, res) => {
     const {
       state,
@@ -151,7 +151,7 @@ router.get(
 // Route to render details of a specific tender
 router.get(
   "/:id",
-  jwtAuthenticate,
+  // jwtAuthenticate,
   wrapAsync(async (req, res) => {
     try {
       const { id } = req.params;

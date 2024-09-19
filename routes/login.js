@@ -38,12 +38,12 @@ router.post(
       });
 
       // Store user info in session
-      // req.session.currentUser = {
-      //   id: user._id,
-      //   mobileNo: user.mobileNo,
-      //   preferences: user.preferences,
-      //   plan: user.plan || "no-plan",
-      // };
+      req.session.currentUser = {
+        id: user._id,
+        mobileNo: user.mobileNo,
+        preferences: user.preferences,
+        plan: user.plan || "no-plan",
+      };
     }
 
     res.redirect("/");
