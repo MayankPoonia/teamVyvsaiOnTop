@@ -5,6 +5,4 @@ node_modules/
 controllers/
 uploads/
 states-and-districts.json
-credentials.json
-token.json
 tender.json
