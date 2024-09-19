@@ -71,6 +71,7 @@ router.get(
 );
 
 // Handle form submission and render tenders with pagination
+// Handle form submission and render tenders with pagination
 router.get(
   "/list",
   jwtAuthenticate,
@@ -84,23 +85,20 @@ router.get(
       limit = DEFAULT_LIMIT,
     } = req.query;
 
-    // Ensure page and limit are positive integers
     const pageNumber = Math.max(parseInt(page, 10), 1);
     const limitNumber = Math.max(parseInt(limit, 10), 1);
 
-    // Construct query based on filters provided (state, district, department)
     const query = {
       state,
-      district: district, // Optional district
+      district: district,
       org_name: department,
+      expired: false, // Only show active tenders
     };
 
-    // Remove undefined keys from the query object
     Object.keys(query).forEach(
       (key) => query[key] === undefined && delete query[key]
     );
 
-    // Fetch tenders from the database with sorting, pagination, and filtering
     const tenders = await Tender.aggregate([
       { $match: query },
       {
@@ -111,23 +109,21 @@ router.get(
                 $replaceAll: { input: "$price", find: ",", replacement: "" },
               },
               to: "double",
-              onError: null, // Handle conversion errors
+              onError: null,
               onNull: null,
             },
           },
         },
       },
-      { $sort: { priceNumeric: -1 } }, // Sort tenders by price in descending order
-      { $skip: (pageNumber - 1) * limitNumber }, // Skip tenders for previous pages
-      { $limit: limitNumber }, // Limit the tenders per page
-      { $project: { priceNumeric: 0 } }, // Exclude temporary priceNumeric field
+      { $sort: { priceNumeric: -1 } },
+      { $skip: (pageNumber - 1) * limitNumber },
+      { $limit: limitNumber },
+      { $project: { priceNumeric: 0 } },
     ]);
 
-    // Get total number of tenders for pagination
     const totalTenders = await Tender.countDocuments(query);
     const totalPages = Math.ceil(totalTenders / limitNumber);
 
-    // If no tenders found on the current page, redirect to the previous valid page
     if (tenders.length === 0 && pageNumber > 1) {
       return res.redirect(
         `/tenders/list?state=${state}&department=${department}&page=${
@@ -136,7 +132,6 @@ router.get(
       );
     }
 
-    // Render the tenders list with pagination info
     res.render("tenders/index", {
       tenders,
       state,

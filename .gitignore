@@ -1,6 +1,7 @@
 .env
 states.js
 seedTenders.js
+tenderUpdate.js
 node_modules/
 controllers/
 uploads/

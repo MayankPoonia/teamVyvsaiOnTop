@@ -47,6 +47,10 @@ const tenderSchema = new Schema({
     type: String,
     required: true,
   },
+  expired: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Tender = mongoose.model("Tender", tenderSchema);

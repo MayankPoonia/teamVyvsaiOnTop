@@ -4,20 +4,10 @@ const Tender = require("../models/tender");
 // Function to parse date string into JavaScript Date object
 function parseClosingDate(dateString) {
   if (!dateString) {
-    // console.error("Invalid date string:", dateString);
     return null;
   }
 
-  // Split date string into components
   const [day, month, year, time, period] = dateString.split(/[\s:-]+/);
-
-  // console.log("Day:", day);
-  // console.log("Month:", month);
-  // console.log("Year:", year);
-  // console.log("Time:", time);
-  // console.log("Period:", period);
-
-  // Map month names to month numbers
   const months = {
     Jan: 0,
     Feb: 1,
@@ -33,37 +23,24 @@ function parseClosingDate(dateString) {
     Dec: 11,
   };
 
-  // Extract hour and minute from time
   let [hours, minutes] = time.split(":").map(Number);
-
-  // Adjust hour based on AM/PM
   if (period === "PM" && hours !== 12) hours += 12;
   if (period === "AM" && hours === 12) hours = 0;
-
-  // Check if minutes were not provided
   if (isNaN(minutes)) minutes = 0;
 
-  // console.log("Parsed Hours:", hours);
-  // console.log("Parsed Minutes:", minutes);
-
-  // Create Date object
   const parsedDate = new Date(year, months[month], Number(day), hours, minutes);
-
-  // Check if date is valid
   if (isNaN(parsedDate.getTime())) {
-    // console.error("Error parsing date:", dateString);
     return null;
   }
 
   return parsedDate;
 }
 
-// Schedule cron job to run every 6 hour
+// Schedule cron job to run every 6 hours
 cron.schedule("* */6 * * *", async () => {
-  // console.log("Cron job is running at:", new Date().toLocaleString());
   try {
-    const currentDate = new Date(); // Current date and time
-    const tenders = await Tender.find({});
+    const currentDate = new Date();
+    const tenders = await Tender.find({ expired: false }); // Only check active tenders
 
     for (const tender of tenders) {
       const tenderClosingDate = parseClosingDate(tender.closing_date);
@@ -76,11 +53,12 @@ cron.schedule("* */6 * * *", async () => {
       }
 
       if (tenderClosingDate < currentDate) {
-        await Tender.deleteOne({ _id: tender._id });
-        // console.log(`Deleted expired tender with ID: ${tender._id}`);
+        // Mark the tender as expired instead of deleting it
+        await Tender.updateOne({ _id: tender._id }, { expired: true });
+        console.log(`Marked expired tender with ID: ${tender._id}`);
       }
     }
   } catch (error) {
-    console.error("Error removing expired tenders:", error);
+    console.error("Error marking expired tenders:", error);
   }
 });
