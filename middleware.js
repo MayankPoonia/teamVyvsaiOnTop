@@ -47,7 +47,7 @@ module.exports.planCheck = (req, res, next) => {
       return res.redirect("/login");
     }
     // console.log("Token verified, user:", user);
-    if (user.pln === "basic-plan" || !user.pln) {
+    if (!user.pln || !user.pln.length) {
       // console.log("User plan not found, redirecting to /subscriptions");
       return res.redirect("/subscriptions");
     } else if (user.pln === "pro-plan" || user.plan === "enterprise-plan") {

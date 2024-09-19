@@ -17,13 +17,12 @@ let statesAndDistricts = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 router.get(
   "/",
   jwtAuthenticate,
-  planCheck,
   wrapAsync(async (req, res) => {
     res.render("tenders/main");
   })
 );
 
-router.get("/file", jwtAuthenticate, planCheck, (req, res) => {
+router.get("/file", jwtAuthenticate, (req, res) => {
   res.send("Filing Kar dunga bhai");
 });
 
@@ -75,7 +74,7 @@ router.get(
 router.get(
   "/list",
   jwtAuthenticate,
-  planCheck,
+
   wrapAsync(async (req, res) => {
     const {
       state,
@@ -149,7 +148,7 @@ router.get(
 router.get(
   "/:id",
   jwtAuthenticate,
-  planCheck,
+
   wrapAsync(async (req, res) => {
     try {
       const { id } = req.params;
