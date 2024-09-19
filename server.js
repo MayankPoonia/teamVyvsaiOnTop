@@ -101,7 +101,7 @@ app.use(cookieParser());
 app.use(flash());
 
 app.use((req, res, next) => {
-  res.locals.currentUser = req.session.currentUser || null;
+  res.locals.currentUser = req.cookies.UUID || null;
   res.locals.paymentSuccess = req.flash("paymentSuccess");
   next();
 });

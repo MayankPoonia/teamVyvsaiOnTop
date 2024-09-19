@@ -20,7 +20,7 @@ router.post(
     const user = await User.findOne({ mobileNo });
 
     if (!user) {
-      console.log("User not found");
+      // console.log("User not found");
       return res.redirect("/login");
     }
 
@@ -38,12 +38,12 @@ router.post(
       });
 
       // Store user info in session
-      req.session.currentUser = {
-        id: user._id,
-        mobileNo: user.mobileNo,
-        preferences: user.preferences,
-        plan: user.plan,
-      };
+      // req.session.currentUser = {
+      //   id: user._id,
+      //   mobileNo: user.mobileNo,
+      //   preferences: user.preferences,
+      //   plan: user.plan || "no-plan",
+      // };
     }
 
     res.redirect("/");

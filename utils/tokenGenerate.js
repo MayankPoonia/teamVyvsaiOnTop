@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 module.exports.generateToken = (user) => {
-  if (!user.plan || !user.plan.length) {
+  if (!user.plan) {
     const payload = { id: user._id };
     return jwt.sign(payload, process.env.JWT_AUTH_SECRET, {
       expiresIn: "20m",
