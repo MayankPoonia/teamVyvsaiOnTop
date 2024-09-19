@@ -44,6 +44,11 @@ router.post(
         preferences: user.preferences,
         plan: user.plan || "no-plan",
       };
+      req.session.save((err) => {
+        if (err) {
+          return next(err);
+        }
+      });
     }
 
     res.redirect("/");

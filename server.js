@@ -8,6 +8,8 @@ const helmet = require("helmet");
 const MongoStore = require("connect-mongo");
 const cookieParser = require("cookie-parser");
 
+const PORT = process.env.PORT || 4000;
+
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -45,9 +47,11 @@ const sessionConfig = {
   secret: "ThisIsTheSecretIWasLookingForHaHa",
   resave: false,
   saveUninitialized: false,
+  rolling: true,
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    maxAge: 1000 * 60 * 20,
   },
 };
 
@@ -100,6 +104,7 @@ app.use(cookieParser());
 app.use(flash());
 
 app.use((req, res, next) => {
+  console.log("Session ID:", req.sessionID);
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.cookies.UUID || null;
@@ -122,10 +127,10 @@ app.get("*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  // console.log(err);
-  res.send(err);
+  console.log(err);
+  res.send("Oh no , some error occured");
 });
 
-app.listen(8000, () => {
-  console.log("Port 8000 is now working");
+app.listen(PORT, () => {
+  console.log(`Port ${PORT} is now working`);
 });
