@@ -1,4 +1,8 @@
-<% layout("layout/boilerplate") %>
+<% layout("layout/boilerplate") %> <% if(error && error.length) {%>
+<div class="alert alert-danger"><%=error %></div>
+<% } %> <% layout("layout/boilerplate") %> <% if(success && success.length) {%>
+<div class="alert alert-success"><%=success %></div>
+<% } %>
 <form action="/subscriptions" method="POST">
   <div class="container py-5 mt-5">
     <div class="pricing-header text-center">

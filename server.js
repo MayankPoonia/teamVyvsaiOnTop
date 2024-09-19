@@ -47,8 +47,7 @@ const sessionConfig = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    expires: Date.now() + 1000 * 60 * 20,
-    maxAge: 1000 * 60 * 20,
+    secure: process.env.NODE_ENV === "production",
   },
 };
 
