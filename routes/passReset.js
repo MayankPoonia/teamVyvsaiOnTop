@@ -30,12 +30,12 @@ router.post(
 
     const otp = generateOTP(); // Generate OTP
     req.session.otp = otp; // Store OTP in session
-    req.session.userId = user._id; // Store userId in session
+    req.session.currentUser = user._id; // Store userId in session
 
     await sendOTPEmail(user.email, otp); // Send OTP via email
 
     res.redirect("/password-reset/verify-otp");
-  }),
+  })
 );
 
 // Verify OTP Route
@@ -55,13 +55,12 @@ router.post(
         errorMessages: [{ msg: "Invalid OTP. Please try again." }],
       });
     }
-  }),
+  })
 );
 
 // New Password Route
 router.get("/new-password", (req, res) => {
-  if (!req.session.userId) {
-   
+  if (!req.session.currentUser.id) {
     return res.redirect("/password-reset/request-otp");
   }
   res.render("password-reset/new-password", { errorMessages: [] });
@@ -78,9 +77,8 @@ router.post(
       });
     }
 
-    const user = await User.findById(req.session.userId);
+    const user = await User.findById(req.session.currentUser.id);
     if (!user) {
-      
       return res.redirect("/password-reset/request-otp");
     }
 
@@ -93,10 +91,10 @@ router.post(
 
     req.flash(
       "success",
-      "Your password has been reset successfully. You can now log in.",
+      "Your password has been reset successfully. You can now log in."
     );
     res.redirect("/login");
-  }),
+  })
 );
 
 module.exports = router;

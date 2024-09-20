@@ -57,7 +57,6 @@ const userSchema = new Schema({
   },
   subscriptionStartDate: {
     type: Date,
-    default: Date.now,
     get: formatDate, // Human-readable format
   },
   subscriptionEndDate: {
