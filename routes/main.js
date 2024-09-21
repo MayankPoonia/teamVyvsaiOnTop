@@ -39,13 +39,14 @@ router.post("/get-in-touch", (req, res) => {
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.log(err);
-        req.flash(
-          "error",
-          "Our server is not accepting messages for sometime , please try later"
-        );
+        req.flash("error", "Something went wrong , try again later :) ");
         res.redirect("/contact");
       } else {
-        console.log("Mail sent");
+        req.flash(
+          "success",
+          "Thanks for Your Response , Team VYVSAI will contact You soon :)"
+        );
+        res.redirect("/contact");
       }
     });
   };
@@ -136,11 +137,6 @@ router.post("/get-in-touch", (req, res) => {
     `,
   };
   sendEmail(mailOptions);
-  req.flash(
-    "success",
-    "Thanks for Your Response , Team VYVSAI will contact You soon :)"
-  );
-  res.redirect("/");
 });
 
 router.get(

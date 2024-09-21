@@ -29,6 +29,7 @@ module.exports.jwtAuthenticate = (req, res, next) => {
     // console.log("Token verified, user:", user);
     if (!user.pln || !user.pln.length) {
       // console.log("User plan not found, redirecting to subscription");
+      req.flash("alert", "You need an active plan for using those services");
       return res.redirect("/subscriptions");
     }
     return next();

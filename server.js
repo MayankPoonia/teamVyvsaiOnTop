@@ -104,11 +104,12 @@ app.use(cookieParser());
 app.use(flash());
 
 app.use((req, res, next) => {
-  console.log("Session ID:", req.sessionID);
+  // console.log("Session ID:", req.sessionID);
   res.locals.success = req.flash("success");
+  res.locals.alert = req.flash("alert");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.cookies.UUID || null;
-  res.locals.paymentSuccess = req.flash("paymentSuccess");
+  // res.locals.paymentSuccess = req.flash("paymentSuccess");
   next();
 });
 

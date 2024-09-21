@@ -13,7 +13,7 @@ const temporaryStore = multer({ dest: "temporary/" });
 const router = express.Router();
 
 // GET route for rendering the form page
-router.get("/", jwtAuthenticate, planCheck, (req, res) => {
+router.get("/", jwtAuthenticate, (req, res) => {
   res.render("pages/upload-documents.ejs"); // Render the form
 });
 
@@ -21,7 +21,6 @@ router.get("/", jwtAuthenticate, planCheck, (req, res) => {
 router.post(
   "/",
   jwtAuthenticate,
-  planCheck,
   temporaryStore.array("files"),
   async (req, res) => {
     try {

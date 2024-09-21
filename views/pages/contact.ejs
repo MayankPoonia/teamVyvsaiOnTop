@@ -1,5 +1,6 @@
-<% layout("layout/boilerplate") %>
-
+<% layout("layout/boilerplate") %> <% if(success && success.length) {%>
+<div class="alert alert-success w-75 mx-auto mt-5 pt-4"><%=success %></div>
+<% } %>
 <div class="container mt-5 py-5">
   <!-- Heading Section -->
   <div class="text-center mb-5">
