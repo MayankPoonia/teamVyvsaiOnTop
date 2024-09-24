@@ -46,16 +46,16 @@ cron.schedule("* */6 * * *", async () => {
       const tenderClosingDate = parseClosingDate(tender.closing_date);
 
       if (!tenderClosingDate) {
-        console.error(
-          `Could not parse closing date for tender ID: ${tender._id}`
-        );
+        // console.error(
+        //   `Could not parse closing date for tender ID: ${tender._id}`
+        // );
         continue;
       }
 
       if (tenderClosingDate < currentDate) {
         // Mark the tender as expired instead of deleting it
         await Tender.updateOne({ _id: tender._id }, { expired: true });
-        console.log(`Marked expired tender with ID: ${tender._id}`);
+        // console.log(`Marked expired tender with ID: ${tender._id}`);
       }
     }
   } catch (error) {
